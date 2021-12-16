@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://unpkg.com/focus-visible@5.0.2/dist/focus-visible.js"
+      defer
+    ></script>
+  </head>
+  <style>
+    .controls {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      bottom: 8px;
+      left: 8px;
+    }
+    button {
+      font-size: 1.3em;
+      margin: 0 0.25em;
+    }
+  </style>
+  <body>
+    <model-viewer
+      id="gagukok_tulipchair_tablechair"
+      camera-controls
+      src="https://xr-box.s3.ap-northeast-2.amazonaws.com/shop_file/webXR_test/gagukok_tulipchair_tablechair_dfdf.gltf"
+      ar
+      ar-modes="webxr scene-viewer quick-look"
+      alt="A 3D model of a Shoe"
+    >
+      <div class="controls">
+        <div>
+          Variant:
+          <select id="variant"></select>
+        </div>
+      </div>
+    </model-viewer>
+
+    <!-- <a href="intent://arvr.google.com/scene-viewer/1.0?file=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF/Avocado.gltf#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;">Avocado</a> -->
+    <a
+      href="intent://arvr.google.com/scene-viewer/1.0?file=
+  https://xr-box.s3.ap-northeast-2.amazonaws.com/shop_file/GoogleModelviewer_20211213/obj.gltf#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=https://developers.google.com/ar;end;"
+      >chair</a
+    >
+    <script>
+      const modelViewerVariants = document.querySelector(
+        "model-viewer#gagukok_tulipchair_tablechair"
+      );
+      const select = document.querySelector("#variant");
+      console.log(select);
+      modelViewerVariants.addEventListener("load", () => {
+        const names = modelViewerVariants.availableVariants;
+        for (const name of names) {
+          const option = document.createElement("option");
+          option.value = name;
+          console.log(option.value);
+          option.textContent = name;
+          select.appendChild(option);
+        }
+        // Adds a default option.
+        const option = document.createElement("option");
+        option.value = "default";
+        option.textContent = "Default";
+        select.appendChild(option);
+      });
+
+      select.addEventListener("input", (event) => {
+        modelViewerVariants.variantName =
+          event.target.value === "default" ? null : event.target.value;
+      });
+    </script>
+    <script src="script.js"></script>
+    <!-- Loads <model-viewer> for browsers: -->
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+  </body>
+</html>
